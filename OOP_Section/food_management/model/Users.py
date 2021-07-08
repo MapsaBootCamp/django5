@@ -1,4 +1,5 @@
 import uuid
+import csv
 from pathlib import Path
 
 
@@ -7,7 +8,7 @@ BASE_PATH = Path(__file__).resolve().parent.parent
 
 class User:
     _type = None
-    _file_path = BASE_PATH 
+    _file_path = BASE_PATH
 
     def __init__(self, username, password, age=None, phone_number=None, address=None, email=None, id=None):
         self.id = self._set_id(id)
@@ -19,26 +20,29 @@ class User:
         self.email = email
 
     def save(self):
-        with open(BASE_PATH + "user", 'a', newline='') as csvfile:
-            fieldnames = ['first_name', 'last_name']
+        with open(BASE_PATH / "user.csv", 'a', newline='') as csvfile:
+            fieldnames = ['id', "username", "password",
+                          "age", "address", "email", "phone_number", "type"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-            writer.writeheader()
-            writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
-            writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
-            writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
-
+            writer.writerow({'id': self.id, "username": self.username, "password": self.password,
+                             "age": self.age, "address": self.address, "email": self.email, "phone_number": self.phone_number, "type": self._type})
 
     def _set_id(self, id):
         if id:
             return id
         else:
-            str(uuid.uuid4)
+            return str(uuid.uuid4())
 
 
-class UserAddi(User):
+class UserRegular(User):
     _type = "active"
 
 
 class UserAdmin(User):
     _type = "staff"
+
+
+if __name__ == "__main__":
+    user = UserAdmin("ashkan", "1234", age=2)
+    user.save()

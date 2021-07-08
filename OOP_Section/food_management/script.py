@@ -10,7 +10,7 @@ def create_user_file():
             pass
     except IOError:
         fieldnames = ['id', "username", "password",
-                      "age", "address", "email", "phone_number"]
+                      "age", "address", "email", "phone_number", "type"]
         with open(BASE_PATH / "user.csv", 'a', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()

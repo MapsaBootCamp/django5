@@ -18,18 +18,6 @@ class UserAdmin(User):
     _type = "admin"
 
 
-class Category:
-    def __init__(self, name):
-        self.name = name
 
-
-class Food:
-
-
-
-
-class Purchase:
-    def __init__(self, user: UserAddi, ):
-        pass
 
 

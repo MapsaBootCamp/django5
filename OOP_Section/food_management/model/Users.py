@@ -1,4 +1,5 @@
 import uuid
+import hashlib
 import csv
 from pathlib import Path
 
@@ -20,6 +21,8 @@ class User:
         self.email = email
 
     def save(self):
+        self.password = hashlib.sha256(
+            self.password.encode("utf8")).hexdigest()
         with open(BASE_PATH / "user.csv", 'a', newline='') as csvfile:
             fieldnames = ['id', "username", "password",
                           "age", "address", "email", "phone_number", "type"]

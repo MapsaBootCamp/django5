@@ -66,6 +66,9 @@ class ConcreteFactory3(AbstractFactory):
 
 
 class AbstractProductA(ABC):
+    """
+    functionality of product 1
+    """
 
     @abstractmethod
     def sit_on(self):

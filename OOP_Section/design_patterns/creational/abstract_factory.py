@@ -15,6 +15,10 @@ class AbstractFactory(ABC):
     def create_product_B(self):
         pass
 
+    @abstractmethod
+    def create_product_C(self):
+        pass
+
 
 class ConcreteFactory1(AbstractFactory):
     """
@@ -26,6 +30,9 @@ class ConcreteFactory1(AbstractFactory):
 
     def create_product_B(self):
         return ProductB1()
+
+    def create_product_C(self):
+        return ProductC1()
 
 
 class ConcreteFactory2(AbstractFactory):
@@ -39,6 +46,9 @@ class ConcreteFactory2(AbstractFactory):
     def create_product_B(self):
         return ProductB2()
 
+    def create_product_C(self):
+        return ProductC2()
+
 
 class ConcreteFactory3(AbstractFactory):
     """
@@ -50,6 +60,9 @@ class ConcreteFactory3(AbstractFactory):
 
     def create_product_B(self):
         return ProductB3()
+
+    def create_product_C(self):
+        return ProductC3()
 
 
 class AbstractProductA(ABC):
@@ -102,6 +115,31 @@ class ProductB3(AbstractProductB):
         print("man sofa modernam")
 
 
+class AbstractProductC(ABC):
+
+    @abstractmethod
+    def ghaza_khordan(self):
+        pass
+
+
+class ProductC1(AbstractProductC):
+
+    def ghaza_khordan(self):
+        print("man miz ghazakhori honariam!")
+
+
+class ProductC2(AbstractProductC):
+
+    def ghaza_khordan(self):
+        print("man miz ghazakhori victorian!")
+
+
+class ProductC3(AbstractProductC):
+
+    def ghaza_khordan(self):
+        print("man miz ghazakhori modernam!")
+
+
 def client(factory):
     """
     get the type of factory. for example in this structure we have
@@ -110,9 +148,11 @@ def client(factory):
 
     obj_a = factory.create_product_A()
     obj_b = factory.create_product_B()
+    obj_c = factory.create_product_C()
 
     obj_a.sit_on()
     obj_b.khabidan()
+    obj_c.ghaza_khordan()
 
 
 if __name__ == '__main__':

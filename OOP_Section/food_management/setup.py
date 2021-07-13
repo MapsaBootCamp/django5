@@ -15,7 +15,7 @@ setup(
     url='https://github.com/teghfo/food_management',
     keywords=['food-management', 'pure-python'],
     install_requires=[
-        'spaCy>=2.3.2'
+        'numpy>=1.15.0'
     ],
     packages=find_packages(exclude=('tests', 'docs')),
     classifiers=[

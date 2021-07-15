@@ -20,7 +20,7 @@ def binomial_optimize(n, k, memoize={}):
         return result
 
 
-print(binomial_optimize(12, 10))
+print(binomial_optimize(12, ))
 
 
 def factotial(n):

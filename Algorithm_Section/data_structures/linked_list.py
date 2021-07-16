@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 
 class LinkedListNode:
@@ -20,7 +21,7 @@ class LinkedListNode:
 
 class LinkedList:
     def __init__(self):
-        self.root = None
+        self.root: Optional[LinkedListNode] = None
 
     def add_begin(self, node: LinkedListNode):
         assert node.free == True, "node must be free. ke nist!"  # tak par bash!
@@ -63,6 +64,39 @@ class LinkedList:
             return count
 
     def pop(self, index=-1):
+        if not self.root or len(self) <= index:
+            raise IndexError("index out of range")
+
+        if index == -1 or index == len(self)-1:
+            if len(self) == 1:
+                self.root.node_free()
+                self.root = None
+            else:
+                temp = self.root
+                while temp.next:
+                    before_temp = temp
+                    temp = temp.next
+                before_temp.next = None
+                temp.node_free()
+        elif index == 0:
+            if len(self) == 1:
+                self.root.node_free()
+                self.root = None
+            else:
+                self.root.node_free()
+                self.root = self.root.next
+        else:
+            count = 0
+            temp = self.root
+            while temp:
+                if count == (index-1):
+                    temp.next.node_free()
+                    temp.next = temp.next.next
+                    break
+                count += 1
+                temp = temp.next
+
+    def remove(self, node: LinkedListNode):
         pass
 
     def insert(self, node: LinkedListNode, index: int):
@@ -72,8 +106,10 @@ class LinkedList:
             node.node_busy()
         elif index >= len(self):
             self.append(node)
+            node.node_busy()
         elif index == 0:
             self.add_begin(node)
+            node.node_busy()
         else:
             count = 0
             temp = self.root
@@ -82,6 +118,7 @@ class LinkedList:
                     right_temp = temp.next
                     temp.next = node
                     node.next = right_temp
+                    node.node_busy()
                     break
                 count += 1
                 temp = temp.next
@@ -109,10 +146,15 @@ l1.add_begin(node2)
 l1.append(node3)
 l1.insert(node4, 1)
 print(l1)
-print(l2)
-print(len(l2))
+l1.pop(5)
+print(l1)
+# print(l2)
+# print(len(l2))
 
-
-# a = [2]
-# a.insert(0, "ashkan")
+# tp = (1, 2)
+# a = [2, 2, 2, "ashkan",2]
+# a.append(tp)
+# a.pop(1)
+# print(tp)
+# a.pop(10)# a.insert(0, "ashkan")
 # print(a)

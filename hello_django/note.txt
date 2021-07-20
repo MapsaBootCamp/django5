@@ -1,0 +1,7 @@
+pip install virtualenv
+virtualenv venv  (command not found) ----> python3 -m virtualenv venv
+. venv/bin/activate (permission denied) --> source venv/bin/activate
+###################################(venv) -----> mikham biam birun ----> deactivate########
+pip install django (faghat yekbar)
+django-admin startproject news_agency . (in hazrat bayad dar venvi ke django nasb shode bezanid)
+code .

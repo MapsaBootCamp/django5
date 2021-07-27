@@ -16,3 +16,6 @@ def list_authors(request):
             }
         )
     return JsonResponse(authors_list, safe=False)
+
+def show_article(request):
+    pass

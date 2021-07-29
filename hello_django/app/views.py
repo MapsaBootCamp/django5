@@ -8,7 +8,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
-from .models import Author, Article
+from .models import Author, Article,Comment
 
 
 def list_authors(request):
@@ -107,4 +107,19 @@ def delete_article(request, id):
 @require_http_methods(["POST"])
 @csrf_exempt
 def create_comment(request, article_id):
-    pass
+    article = get_object_or_404(Article, id = article_id)
+    data = json.loads(request.body)
+    name = data.get("name", None)
+    body = data.get("body", None)
+
+    if name and body:
+        try:
+            Comment.objects.create(name=name, article=article, body=body)
+            return JsonResponse({"status": "201", "msg": f"comment shoma be {article.title} afzude shod"})
+        except IntegrityError:
+            raise IntegrityError
+
+def show_all_comment(request, article_id):
+    article = get_object_or_404(Article, id = article_id)
+    result = list(article.comment_set.all().values())
+    return JsonResponse(result, safe=False)

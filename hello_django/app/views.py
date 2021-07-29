@@ -3,7 +3,8 @@ import json
 from django.core.serializers import serialize
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Author, Article
 
@@ -39,6 +40,7 @@ def show_articles(request):
     return JsonResponse(articles_list, safe=False)
 
 
+@csrf_exempt
 def edit_article(request, id):
     if request.method == "GET":
         article = Article.objects.filter(id=id).values().first()

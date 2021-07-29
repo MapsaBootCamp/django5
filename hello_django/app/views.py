@@ -103,3 +103,8 @@ def delete_article(request, id):
             return JsonResponse({"error": str(e)})
     else:
         raise PermissionDenied
+
+@require_http_methods(["POST"])
+@csrf_exempt
+def create_comment(request, article_id):
+    pass

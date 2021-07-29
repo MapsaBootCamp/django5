@@ -27,5 +27,18 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+
 ### article---> title --> charfield 255, body ---> textfielf, author(ye juroi baiad be author vasl she), created time ---> datetimefiled(auto_now_add=true), status booleanfield(default=True)
 ### comment ---> name---> charfield, text---> textfield, article( hamun )
+
+
+class Comment(models.Model):
+    """
+    commnet fields: commenter, body, article
+    """
+    name = models.CharField(max_length=200)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    body = models.TextField()
+
+    def __str__(self):
+        return f"{self.name} - {self.body[:20]} -{self.article.title}"

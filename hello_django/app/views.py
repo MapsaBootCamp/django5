@@ -1,10 +1,12 @@
 import json
 
 from django.core.serializers import serialize
-from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 from .models import Author, Article
 
@@ -24,7 +26,8 @@ def list_authors(request):
 
 
 def show_articles(request):
-    articles_list = list(Article.objects.filter(status=True).values("title", "body", "author__name", "created_time"))
+    articles_list = list(
+        Article.objects.filter(status=True).values("id", "title", "body", "author__name", "created_time"))
     # articles_qs = Article.objects.filter(status=True)
     # articles_list = []
     # for article in articles_qs:
@@ -65,3 +68,38 @@ def edit_article(request, id):
         return JsonResponse({"status": "ba khubi va khosi update shod"})
 
     return JsonResponse({"status": "no ok", "error": "faghat get va put"})
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def create_article(request):
+    data = json.loads(request.body)
+    author = data.get("author", None)
+    title = data.get("title", None)
+    body = data.get("body", None)
+    if author and title and body:
+        authors = Author.objects.filter(name=author)
+        if authors:
+            article_obj = Article(title=data.get("title"), body=data.get("body"), author=authors[0])
+            article_obj.save()
+            return JsonResponse({"status":"201"})
+        else:
+            raise PermissionDenied
+    else:
+        return JsonResponse({"error": "field author ya title ya body peida nashod"})
+
+
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_article(request, id):
+    article = get_object_or_404(Article, id=id)
+    author_is_user = json.loads(request.body).get("author", None) == article.author.name
+
+    if author_is_user:
+        try:
+            article.delete()
+            return JsonResponse({"status": "204"})
+        except IntegrityError as e:
+            return JsonResponse({"error": str(e)})
+    else:
+        raise PermissionDenied

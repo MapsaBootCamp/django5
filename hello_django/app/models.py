@@ -6,11 +6,12 @@ class Author(models.Model):
     تیبلی در دیتابیس خواهیم داشت که فیلدهای این کلاس ستونهای تیبل آن هستند
 
     """
-    name = models.CharField(verbose_name="نام",max_length=200)
+    name = models.CharField(verbose_name="نام", max_length=200)
     email = models.EmailField()
 
     def __str__(self):
         return self.name
+
 
 class Article(models.Model):
     """
@@ -25,7 +26,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
-
 
 ### article---> title --> charfield 255, body ---> textfielf, author(ye juroi baiad be author vasl she), created time ---> datetimefiled(auto_now_add=true), status booleanfield(default=True)
 ### comment ---> name---> charfield, text---> textfield, article( hamun )

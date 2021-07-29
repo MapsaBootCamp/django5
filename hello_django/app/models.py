@@ -20,6 +20,7 @@ class Article(models.Model):
     body = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.RESTRICT)
     created_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
 
     def __str__(self):

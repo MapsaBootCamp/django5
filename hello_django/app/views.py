@@ -121,5 +121,7 @@ def create_comment(request, article_id):
 
 def show_all_comment(request, article_id):
     article = get_object_or_404(Article, id = article_id)
-    result = list(article.comment_set.all().values())
+    result = article.comment_set.all()
+    result = result.exclude(body__contains="mozakhraf")
+    result = list(result.values())
     return JsonResponse(result, safe=False)

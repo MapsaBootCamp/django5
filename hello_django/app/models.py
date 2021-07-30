@@ -36,9 +36,15 @@ class Comment(models.Model):
     """
     commnet fields: commenter, body, article
     """
+    RATE_CHOICE = (
+        ("p", "positive"),
+        ("n", "negative")
+    )
+
     name = models.CharField(max_length=200)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     body = models.TextField()
+    rate = models.CharField(max_length= 1,null=True, blank=True, choices=RATE_CHOICE)
 
     def __str__(self):
         return f"{self.name} - {self.body[:20]} -{self.article.title}"

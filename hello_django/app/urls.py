@@ -4,8 +4,8 @@ from .views import list_authors, show_articles, edit_article, delete_article, cr
     show_all_comment
 
 urlpatterns = [
-    path('authors/', list_authors),
-    path('articles/', show_articles),
+    path('authors/', list_authors, name="authors"),
+    path('articles/', show_articles, name="articles"),
     path('edit-article/<int:id>', edit_article),
     path('delete-article/<int:id>', delete_article),
     path('create-article/', create_article),

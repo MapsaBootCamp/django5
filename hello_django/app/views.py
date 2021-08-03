@@ -1,28 +1,37 @@
 import json
 
 from django.core.serializers import serialize
+from django.shortcuts import redirect
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.contrib.auth.models import AnonymousUser
 
-from .models import Author, Article,Comment
+from .models import Author, Article, Comment
 
 
+# @login_required(login_url="/admin/login/")
 def list_authors(request):
-    authors_qs = Author.objects.all()
+    if request.user.is_superuser:
+        # if request.user.username == "admin":
+        authors_qs = Author.objects.all()
 
-    authors_list = []
-    for author in authors_qs:
-        authors_list.append(
-            {
-                "name": author.name,
-                "email": author.email
-            }
-        )
-    return JsonResponse(authors_list, safe=False)
+        authors_list = []
+        for author in authors_qs:
+            authors_list.append(
+                {
+                    "name": author.name,
+                    "email": author.email
+                }
+            )
+        return JsonResponse(authors_list, safe=False)
+    else:
+        return redirect(reverse("articles"))
 
 
 def show_articles(request):
@@ -80,9 +89,10 @@ def create_article(request):
     if author and title and body:
         authors = Author.objects.filter(name=author)
         if authors:
-            article_obj = Article(title=data.get("title"), body=data.get("body"), author=authors[0])
+            article_obj = Article(title=data.get(
+                "title"), body=data.get("body"), author=authors[0])
             article_obj.save()
-            return JsonResponse({"status":"201"})
+            return JsonResponse({"status": "201"})
         else:
             raise PermissionDenied
     else:
@@ -93,7 +103,8 @@ def create_article(request):
 @require_http_methods(["DELETE"])
 def delete_article(request, id):
     article = get_object_or_404(Article, id=id)
-    author_is_user = json.loads(request.body).get("author", None) == article.author.name
+    author_is_user = json.loads(request.body).get(
+        "author", None) == article.author.name
 
     if author_is_user:
         try:
@@ -104,10 +115,11 @@ def delete_article(request, id):
     else:
         raise PermissionDenied
 
+
 @require_http_methods(["POST"])
 @csrf_exempt
 def create_comment(request, article_id):
-    article = get_object_or_404(Article, id = article_id)
+    article = get_object_or_404(Article, id=article_id)
     data = json.loads(request.body)
     name = data.get("name", None)
     body = data.get("body", None)
@@ -119,8 +131,9 @@ def create_comment(request, article_id):
         except IntegrityError:
             raise IntegrityError
 
+
 def show_all_comment(request, article_id):
-    article = get_object_or_404(Article, id = article_id)
+    article = get_object_or_404(Article, id=article_id)
     result = article.comment_set.all()
     result = result.exclude(body__contains="mozakhraf")
     result = list(result.values())

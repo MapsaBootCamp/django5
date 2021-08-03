@@ -21,6 +21,9 @@ media
 *.py[cod]
 *$py.class
 
+#pycharm
+.idea/
+
 # C extensions
 *.so
 

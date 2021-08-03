@@ -22,7 +22,7 @@ media
 *$py.class
 
 #pycharm
-.idea/
+.idea
 
 # C extensions
 *.so

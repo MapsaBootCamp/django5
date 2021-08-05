@@ -11,6 +11,10 @@ class Author(models.Model):
     name = models.CharField(verbose_name="نام", max_length=200)
     email = models.EmailField()
 
+    @property
+    def email_befor_domain(self):
+        return self.email.split('@')[0]
+
     def __str__(self):
         return self.name
 

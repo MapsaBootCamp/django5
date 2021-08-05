@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users.apps.UsersConfig',
+
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -32,6 +33,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'rishoGheichi.urls'
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {

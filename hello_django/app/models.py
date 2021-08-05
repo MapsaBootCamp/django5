@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.db import models
+from django.db import models, connection
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.constraints import UniqueConstraint
@@ -35,7 +35,7 @@ class ArticleManager(models.Manager):
         return super().get_queryset().filter(status=True)
 
     def truncate(self):
-        pass
+        self.get_queryset().delete()
 
 
 class Article(models.Model):
@@ -60,6 +60,12 @@ class Article(models.Model):
         if "boogh" in self.body:
             return
         return super().save(*args, **kwargs)
+
+    @classmethod
+    def truncate(cls):
+        with connection.cursor() as cursor:
+            cursor.execute(
+                'TRUNCATE TABLE "{0}" CASCADE'.format(cls._meta.db_table))
 
     class Meta:
         ordering = ['-id']

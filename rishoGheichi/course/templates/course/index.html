@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% for object in course_cat_objects %}
+        <ul>
+            {% if not object.category %}
+                <li>{{ object.name }}</li>
+                {% for elm in object.child_cat.all %}
+                    <ul>
+                        <li>{{ elm.name }}</li>
+                    </ul>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    {% endfor %}
+
+{% endblock %}

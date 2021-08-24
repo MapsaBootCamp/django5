@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Risho Gheichi</title>
-</head>
-<body>
-<h1>Hello {{ name }}</h1>
-{% if age > 18 %}<p>+18</p>{% endif %}
+{% extends "base.html" %}
 
-<ul>
 
-</ul>
-</body>
-</html>
+{% block content %}
+    <h1>وسط صفحه</h1>
+    <p>{{ name }} is {{ age }} years old!</p>
+    {% if role == "admin" %}
+        <p>salam admin</p>
+            {% else %}
+        <p>salam customer</p>
+    {% endif %}
+{% endblock %}
+

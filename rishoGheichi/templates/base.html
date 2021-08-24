@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>    {{ title }}
+    </title>
 </head>
 <body>
+<div>
+    <div>
+        {% include "header.html" %}
+    </div>
+    <div>
+        <div>
+            {% block content %}{% endblock content %}
+        </div>
+            {% include "sidebar.html" %}
+        <div>
+            {% include "footer.html" %}
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>

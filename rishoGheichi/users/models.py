@@ -63,7 +63,10 @@ class Karjoo(BaseKarbaran):
     pass
 
 
-
-
 class KarFarma(BaseKarbaran):
     pass
+
+
+class Mentor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=model_image_directory_path)

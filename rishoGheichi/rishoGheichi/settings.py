@@ -21,6 +21,8 @@ INSTALLED_APPS = [
 
     "users",
     "course",
+    "resume",
+    "exam",
 ]
 
 MIDDLEWARE = [

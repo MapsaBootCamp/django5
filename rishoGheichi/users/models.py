@@ -21,6 +21,17 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
 
+    def create_mentoruser(self, email, password, phone="",  **extra_fields):
+        """
+          Create and save a Mentor with the given email and password.
+          """
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_active', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Admin user must have is_staff=True.')
+        return self.create_user(email, password,phone, **extra_fields)
+
     def create_superuser(self, email, password, phone="",  **extra_fields):
         """
         Create and save a SuperUser with the given email and password.
@@ -50,6 +61,13 @@ class User(AbstractUser):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+
+class UserhayeMoredeAlagheMardani(User):
+    leader = models.CharField(max_length=50, default="fatemeh mardani")
+
+    class Meta:
+        verbose_name = _('mardani_user')
+        verbose_name_plural = _('mardani_users')
 
 class BaseKarbaran(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

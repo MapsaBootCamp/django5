@@ -1,0 +1,11 @@
+{% load course_app_tags %}
+<ul>
+    {% for sub in subs %}
+        <li>
+            {{ sub.name }}
+            {% if sub.child_cat.count > 0 %}
+                {% tree_structure sub %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

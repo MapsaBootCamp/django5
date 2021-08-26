@@ -1,16 +1,18 @@
 {% extends "base.html" %}
-
+{% load course_app_tags %}
 
 {% block content %}
+    <div style="direction: rtl"><h1>{{ 125465840 | intcommma}}</h1></div>
+
+    <h1>salam "{{ date |date:"\d\a\r \s\a\l\e Y \n\a\m\a\k\i" }}" chetori</h1>
+    {% find_django "amin"%}
     {% for object in course_cat_objects %}
         <ul>
             {% if not object.category %}
-                <li>{{ object.name }}</li>
-                {% for elm in object.child_cat.all %}
-                    <ul>
-                        <li>{{ elm.name }}</li>
-                    </ul>
-                {% endfor %}
+                <li>{{ object.name}}</li>
+                {% if object.child_cat.count %}
+                    {% tree_structure object %}
+                {% endif %}
             {% endif %}
         </ul>
     {% endfor %}

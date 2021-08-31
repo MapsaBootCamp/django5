@@ -1,27 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>    {{ title }}
-    </title>
+    <link rel="icon" href="{% static 'assets/rishoGheichi.png'%}"/>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <title>ریش و قیچی :: {{ title }}</title>
 </head>
 <body>
 <div>
-    <div>
+    <header>
         {% include "header.html" %}
+    </header>
+<div class="landing-banner">
+    <div class="home-dsk-banner">
+        <img class="home-dsk-banner__image" src="{% static 'assets/banner.jpg' %}" alt="">
     </div>
+    <div class="home-dsk-banner__data-container">
+        <div class="banner-font">Make Your Dreams</div>
+        <div>By</div>
+        <div style="font-size: larger;font-weight: bolder">RishoGheichi</div>
+    </div>
+</div>
     <div>
-        <div>
-            {% block content %}{% endblock content %}
+        <div class="container center-container">
+            <div class="sidebar">
+                {% include "sidebar.html" %}
+            </div>
+            <div class="main">
+                {% block content %}{% endblock content %}
+            </div>
         </div>
-            {% include "sidebar.html" %}
         <div>
             {% include "footer.html" %}
         </div>
     </div>
 </div>
-
-
-
 </body>
 </html>

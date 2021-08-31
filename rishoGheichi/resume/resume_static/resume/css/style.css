@@ -1,0 +1,29 @@
+body{
+    background: #FF4358;
+}
+
+.resume-container{
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+.resume-sidebar{
+    display: flex;
+    flex-direction: row;
+    border: solid black;
+    width: 30%;
+    height: 100%;
+}
+
+.resume-main {
+    display: flex;
+    border: solid black;
+
+    flex-direction: row;
+    width: 70%;
+    height: 100%;
+}
+
+.resume-main > div {
+
+}

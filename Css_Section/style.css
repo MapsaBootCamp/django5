@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+}
+
+ul {
+    list-style: none;
+}
+
+.header-short {
+    direction: rtl;
+    background-color: #00879e;
+    margin-bottom: 1px;
+    padding: 2px;
+    max-height: 20px;
+    color: #FFF;
+}
+
+.header-short-elm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-short-right {}
+
+.center-container {
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+.header-middle {
+    background-color: #FFF;
+    margin-bottom: 1px;
+    padding: 8px;
+    min-height: 80px;
+}
+
+.header-middle-elm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pull-right {
+    /* margin-right: auto; */
+    display: inline-block;
+}
+
+.pull-left {
+    /* margin-left: auto; */
+    display: inline-block;
+}
+
+.shalgham-logo {
+    border: #FFF;
+    border-radius: 50%;
+}
+
+.header-main {
+    direction: rtl;
+    font-size: 12px;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+}
+
+.header-main-elem {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-main-elem>a {
+    text-decoration: none;
+    margin-left: 15px;
+    color: black;
+}
+
+.container {
+    background-color: seagreen;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    min-height: 1000px;
+}

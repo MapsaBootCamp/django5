@@ -1,1 +1,49 @@
-<h1> Header</h1>
+{% load static %}
+
+<div>
+    <div class="header-short">
+        <div class="center-container">
+            <div class="header-short-elm">
+                <div class="header-short -right">salam</div>
+                <div class="header-short -left">{% if user.is_authenticated %}
+                    <div>سلام {{ user.username }}</div>{% else %}<a style="color:white;text-decoration: none;
+" href="{% url 'login' %}">ورود</a>{% endif %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle">
+        <div class="center-container">
+            <div class="header-middle-elm">
+                <div class="pull-right">
+                    <img class="header-rishogheichi-logo" src="{% static 'assets/rishoGheichi.png' %}"
+                         alt="لوگو ریش و قیچی" width="140" height="105" border="0"/>
+                </div>
+                <div class="header-middle-title"><h1>به ریش و قیچی خوش آمدید</h1></div>
+                <div class="pull-left">
+                    <img class="header-rishogheichi-logo" src="{% static 'assets/rishoGheichi.png' %}"
+                         alt="لوگو ریش و قیچی" width="140" height="105" border="0"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-main">
+        <div class="center-container">
+            <div>
+                <ul class="header-main-elem">
+                    <a href="#">
+                        <li>صفحه اصلی</li>
+                    </a>
+                    <a href="#">
+                        <li>دوره های آموزش</li>
+                    </a>
+                    <a href="#">
+                        <li>مدیریت و بررسی رزومه</li>
+                    </a>
+                    <a href="#">
+                        <li>خودآزمای مهارت</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

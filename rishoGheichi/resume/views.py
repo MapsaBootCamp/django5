@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-def resume_index(request):
-    pass
+def show_resume(request):
+    return render(request, 'resume/index.html', {})

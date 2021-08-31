@@ -1,0 +1,39 @@
+{% extends "course/base_course.html" %}
+{% load course_app_tags %}
+
+{% block content %}
+    <div style="direction: rtl"><h1>{{ 125465840 | intcommma }}</h1></div>
+
+    <h1>salam "{{ date |date:"\d\a\r \s\a\l\e Y \n\a\m\a\k\i" }}" chetori</h1>
+    {% find_django "amin" %}
+    {% block course-header %}
+        {% for object in course_cat_objects %}
+            <ul>
+                {% if not object.category %}
+                    <li>{{ object.name }}</li>
+                    {% if object.child_cat.count %}
+                        {% tree_structure object %}
+                    {% endif %}
+                {% endif %}
+            </ul>
+        {% endfor %}
+    {% endblock %}
+
+    <hr>
+    <br>
+    {% block course-main %}
+        {% for course in courses %}
+            <div class="col-sm-6 col-md-4 col-lg-3 mt-4 m-2">
+                <div class="card m-2" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description | slice:10 }}</p>
+                        <a href="{% url 'course_detail' course.id %}" class="btn btn-primary">detail</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,6 @@
+.course-list-body{
+    display: flex;
+    flex-direction: row;
+    background: #063166;
+}
+

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 def index(request):
@@ -13,5 +15,10 @@ urlpatterns = [
     path('', index, name='home_page'),
     path('course/', include("course.urls")),
     path('account/', include("users.urls")),
+    path('resume/', include("resume.urls")),
 
 ]
+
+
+# if settings.DEBUG:
+#     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,3 +1,4 @@
+import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
@@ -16,7 +17,7 @@ urlpatterns = [
     path('course/', include("course.urls")),
     path('account/', include("users.urls")),
     path('resume/', include("resume.urls")),
-
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 

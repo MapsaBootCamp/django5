@@ -1,5 +1,6 @@
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.http import require_http_methods
 
 from .models import CourseCategory, Course
 
@@ -17,7 +18,7 @@ def course_index(request):
 # list all course
 def course_list(request):
     if request.method == "GET":
-        course_cat_objects_qs = CourseCategory.objects.all()
+        course_cat_objects_qs = CourseCategory.objects.select_related('category').all()
         courses_qs = Course.objects.all()
         print(courses_qs)
         context = {
@@ -29,5 +30,12 @@ def course_list(request):
 
 
 # course detail
+@require_http_methods(["GET"])
 def course_detail(request, id):
-    pass
+    course_obj = get_object_or_404(Course, id=id)
+    context = {
+        "title": course_obj.title,
+        "course": course_obj,
+        "comments": course_obj.comments.select_related("user").all()
+    }
+    return render(request, 'course/course_detail.html', context)

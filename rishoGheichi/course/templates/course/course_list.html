@@ -17,11 +17,16 @@
                 {% endif %}
             </ul>
         {% endfor %}
+        <h1>Search</h1>
+        <form method="GET" action="{% url 'course_list' %}">
+            <label for="title">title</label><input type="text" name="title">
+            <label for="mentor">mentor</label><input type="text" name="mentor">
+            <button type="submit">search</button>
+        </form>
     {% endblock %}
 
-    <hr>
-    <br>
     {% block course-main %}
+
         {% for course in courses %}
             <div class="col-sm-6 col-md-4 col-lg-3 mt-4 m-2">
                 <div class="card m-2" style="width: 18rem;">

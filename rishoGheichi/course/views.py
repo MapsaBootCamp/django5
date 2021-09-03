@@ -18,9 +18,15 @@ def course_index(request):
 # list all course
 def course_list(request):
     if request.method == "GET":
+        title_filter = request.GET.get('title', None)
+        mentor_filter = request.GET.get('mentor', None)
         course_cat_objects_qs = CourseCategory.objects.select_related('category').all()
         courses_qs = Course.objects.all()
-        print(courses_qs)
+        if title_filter:
+            courses_qs = courses_qs.filter(title__contains=title_filter)
+        if mentor_filter:
+            print("hello")
+            courses_qs = courses_qs.filter(mentor__user__email__contains=mentor_filter)
         context = {
             "course_cat_objects": course_cat_objects_qs,
             'courses': courses_qs,

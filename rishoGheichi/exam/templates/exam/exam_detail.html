@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>detail</title>
 </head>
 <body>
-$END$
+<div>
+    <div>
+        {% if not exams_list %}
+            <p> در هیچ آزمونی از جنس {{ exam_category }}تاکنون شرکت نکرده ای. </p>
+        {% endif %}
+        {% for exam in exams_list %}
+                <p>azmoon shomare {{ forloop.counter }}:</p>
+                <p>score: {{ exam.score }}</p>
+        {% endfor %}
+        <button><a href="{% url 'create_exam' %}">start exam</a></button>
+
+    </div>
+</div>
 </body>
 </html>

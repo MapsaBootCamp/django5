@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>exam lsit</title>
 </head>
 <body>
-$END$
+<div class="container">
+    <div class="card-list-exam">
+        {% for exam in exams_list %}
+            <div>
+                <a href="{% url 'exam_detail' exam.id %}">{{ exam.name }}</a>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</div>
+
 </body>
 </html>

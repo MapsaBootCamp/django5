@@ -6,7 +6,7 @@
             <div class="header-short-elm">
                 <div class="header-short -right">salam</div>
                 <div class="header-short -left">{% if user.is_authenticated %}
-                    <div>سلام {{ user.username }}</div>{% else %}<a style="color:white;text-decoration: none;
+                    <div>سلام {{ user.email }}</div><a href="{% url 'logout' %}">logout</a></a>{% else %}<a style="color:white;text-decoration: none;
 " href="{% url 'login' %}">ورود</a>{% endif %}</div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                     <a href="#">
                         <li>مدیریت و بررسی رزومه</li>
                     </a>
-                    <a href="#">
+                    <a href="{% url 'exam_list' %}">
                         <li>خودآزمای مهارت</li>
                     </a>
                 </ul>

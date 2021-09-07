@@ -17,6 +17,7 @@ class ExamList(View):
 
 
 class ExamDetail(LoginRequiredMixin, View):
+    login_url = '/account/login/'
     def get(self, request, pk):
         exam_cat_obj = get_object_or_404(ExamCategory, id=pk)
         exam_qs = Exam.objects.filter(category=exam_cat_obj, user=request.user).order_by("create_time")

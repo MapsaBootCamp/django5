@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 def index(request):
     context = {"title": "صفحه اصلی", "name" : "ashkan", "age": 19,"role": "customer"}
     return render(request, 'index.html', context)

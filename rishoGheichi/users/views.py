@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required, permission_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -10,7 +10,8 @@ from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views.generic import FormView
+from django.views.decorators.http import require_http_methods
+from django.views.generic import FormView, CreateView
 
 from utils.verification_email_token_gen import account_activation_token
 from .forms import RegisterForm
@@ -45,6 +46,7 @@ def logout_view(request):
     return redirect('/')
 
 
+@require_http_methods(["POST"])
 def signup(request):
     if request.method == "POST":
         email = request.POST.get("email", None)
@@ -61,6 +63,7 @@ def signup(request):
                             current_site = get_current_site(request)
                             mail_subject = 'Activate your account in RishoGheichi.'
                             message = render_to_string('validation_email_template.html', {
+                                'user': user,
                                 'domain': current_site.domain,
                                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                                 'token': account_activation_token.make_token(user),
@@ -80,7 +83,7 @@ def signup(request):
                 return HttpResponse("email tekrari")
 
 
-def activate(request, uidb64, token):
+def email_activate(request, uidb64, token):
     User = get_user_model()
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -95,9 +98,12 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-class RegisterView(FormView):
+class RegisterView(CreateView):
     template_name = "users/register.html"
     form_class = RegisterForm
+    success_url = '/account/login'
+
+
 
 
 def check_khodia(user):
@@ -109,3 +115,9 @@ def check_khodia(user):
 @user_passes_test(check_khodia, login_url='/account/login')
 def faghat_khodia(request):
     return HttpResponse("raghs bandari")
+
+
+@permission_required("course.raghs_bandari", raise_exception=True)
+@login_required
+def raghas_khune(request):
+    return HttpResponse("baba karam!")

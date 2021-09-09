@@ -1,15 +1,15 @@
 import re
 
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.translation import gettext, gettext_lazy as _
-from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.forms import ValidationError
 
 from .models import User
 
 
 class RegisterForm(UserCreationForm):
     error_messages = {
-        'phone': _('The two password fields didn’t match.'),
+        'phone': _('Phone pattern not matched.'),
     }
 
     class Meta:
@@ -21,7 +21,5 @@ class RegisterForm(UserCreationForm):
         if re.match(r"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}", phone):
             return phone
         else:
-            raise ValidationError(
-                self.error_messages['phone irani bezan'],
-                code='phone',
-            )
+            print("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!")
+            raise ValidationError("phone irani bezan masalan: 09121212345")

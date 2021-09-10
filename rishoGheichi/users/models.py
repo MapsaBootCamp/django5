@@ -87,7 +87,7 @@ class KarFarma(BaseKarbaran):
 
 class Mentor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(upload_to=model_image_directory_path, null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.email}'

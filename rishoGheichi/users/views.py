@@ -14,6 +14,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.generic import FormView, CreateView
 
 from utils.verification_email_token_gen import account_activation_token
+from .decorators import check_mentor
 from .forms import RegisterForm
 
 User = get_user_model()
@@ -121,3 +122,8 @@ def faghat_khodia(request):
 @login_required
 def raghas_khune(request):
     return HttpResponse("baba karam!")
+
+
+@check_mentor(age=21)
+def poya_irad_bani_esraeil(request):
+    return HttpResponse("man mentoram")

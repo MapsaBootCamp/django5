@@ -8,6 +8,13 @@
     {% for chapter in course.chapters.all %}
         <h1>{{ chapter.chapter_title }}</h1>
     {% endfor %}
+    {% if course.id in cart %}
+        <p>شما این کورس را به سبد اضافه کردی</p>
+        {% else %}
+
+        <button><a href="{% url 'course_add_to_cart' course.id%}">add_to_cart</a></button>
+    {% endif %}
+
     <h1>Comments</h1>
     {% for comment in comments %}
         <h1>{{ comment.user.email }}</h1>

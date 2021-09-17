@@ -1,5 +1,6 @@
 {% extends "course/base_course.html" %}
 {% load course_app_tags %}
+{% load cache %}
 
 {% block content %}
     <div style="direction: rtl"><h1>{{ 125465840 | intcommma }}</h1></div>
@@ -7,16 +8,20 @@
     <h1>salam "{{ date |date:"\d\a\r \s\a\l\e Y \n\a\m\a\k\i" }}" chetori</h1>
     {% find_django "amin" %}
     {% block course-header %}
-        {% for object in course_cat_objects %}
-            <ul>
-                {% if not object.category %}
-                    <li>{{ object.name }}</li>
-                    {% if object.child_cat.count %}
-                        {% tree_structure object %}
+        <h1>counter : {{ counter }}</h1>
+        {% cache 500 header request.user %}
+            {% for object in course_cat_objects %}
+                <ul>
+                    {% if not object.category %}
+                        <li>{{ object.name }}</li>
+                        {% if object.child_cat.count %}
+                            {% tree_structure object %}
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            </ul>
-        {% endfor %}
+                </ul>
+            {% endfor %}
+        {% endcache %}
+
         <h1>Search</h1>
         <form method="GET" action="{% url 'course_list' %}">
             <label for="title">title</label><input type="text" name="title">
@@ -35,6 +40,9 @@
                         <h5 class="card-title">{{ course.title }}</h5>
                         <p class="card-text">{{ course.description | slice:10 }}</p>
                         <a href="{% url 'course_detail' course.id %}" class="btn btn-primary">detail</a>
+                        {% if course.id in cart %}
+                            <p>این کورس را قبلا به سبد خریدت اضافه کرده ای. منتظر پرداختیم!</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from .models import Author, Article, ArticleCategory, Chapter
+from .models import Author, Article, ArticleCategory, Chapter, Comment
 
 
 class UserSerializerNested(serializers.ModelSerializer):
@@ -56,8 +56,26 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class CommentSerializer(serializers.Serializer):
+    # article = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.CharField()
+    content = serializers.CharField()
+
+    def create(self, validated_data, **kwargs):
+        article_id = int(self.context.get("article_id"))
+        print(article_id)
+        return Comment.objects.create(article_id=article_id, **validated_data)
+
+    def update(self, instance, validated_data):
+        instance.user = validated_data.get("user", instance.user)
+        instance.content = validated_data.get("content", instance.content)
+        instance.save()
+        return instance
+
+
 class ArticleDetailSerializer(serializers.ModelSerializer):
     chapters = ChapterSerializer(many=True)
+    comment_set = CommentSerializer(many=True)
 
     class Meta:
         model = Article

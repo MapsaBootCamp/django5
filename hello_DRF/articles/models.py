@@ -42,3 +42,12 @@ class Chapter(models.Model):
 
     def __str__(self):
         return f"{self.article.title}-{self.chapter_number}"
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.CharField(max_length=255)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.user

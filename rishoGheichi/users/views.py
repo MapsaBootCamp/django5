@@ -105,8 +105,6 @@ class RegisterView(CreateView):
     success_url = '/account/login'
 
 
-
-
 def check_khodia(user):
     if user.is_authenticated:
         return user.email.endswith('@rishogheichi.com')

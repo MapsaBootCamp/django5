@@ -45,7 +45,7 @@ class Chapter(models.Model):
 
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name = "comments" ,on_delete=models.CASCADE)
     user = models.CharField(max_length=255)
     content = models.TextField()
 

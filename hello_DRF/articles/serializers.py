@@ -44,10 +44,14 @@ class AuthorSerializer(serializers.ModelSerializer):
 class ArticleListSerializer(serializers.ModelSerializer):
     # category = serializers.StringRelatedField()
     # author = serializers.StringRelatedField()
+    number_of_comments = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
         exclude = ["id"]
+
+    def get_number_of_comments(self, obj):
+        return obj.comments.all().values()
 
 
 class ChapterSerializer(serializers.ModelSerializer):

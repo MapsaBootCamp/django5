@@ -7,9 +7,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.core.cache import cache
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+
 def index(request):
     cache.set("name", "ashkan", 50)
-    context = {"title": "صفحه اصلی", "name" : "ashkan", "age": 19,"role": "customer"}
+    context = {"title": "صفحه اصلی", "name": "ashkan",
+               "age": 19, "role": "customer"}
     return render(request, 'index.html', context)
 
 
@@ -21,6 +28,8 @@ urlpatterns = [
     path('resume/', include("resume.urls")),
     path('exam/', include("exam.urls")),
     path('order/', include("order.urls")),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
 

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'crispy_forms',
+    'django_celery_beat',
 
     "users",
     "course",
@@ -218,3 +219,12 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# CELERY Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/2'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Tehran'

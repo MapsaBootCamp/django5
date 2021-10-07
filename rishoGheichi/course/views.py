@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.core.cache import cache
@@ -6,6 +7,7 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
 from .models import CourseCategory, Course
+from .tasks import summation
 
 
 
@@ -62,3 +64,10 @@ def course_detail(request, id):
         "comments": course_obj.comments.select_related("user").all()
     }
     return render(request, 'course/course_detail.html', context)
+
+
+def test_celery(request):
+
+    summation.delay(5, 5)
+
+    return HttpResponse("ba celery anjam shod")

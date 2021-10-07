@@ -16,6 +16,7 @@ from django.views.generic import FormView, CreateView
 from utils.verification_email_token_gen import account_activation_token
 from .decorators import check_mentor
 from .forms import RegisterForm
+from .tasks import async_send_mail
 
 User = get_user_model()
 
@@ -70,7 +71,8 @@ def signup(request):
                                 'token': account_activation_token.make_token(user),
                             })
                             to_email = request.POST.get('email')
-                            send_mail(mail_subject, message, settings.EMAIL_HOST_USER, ["python.ekbatan@gmail.com"])
+                            # send_mail(mail_subject, message, settings.EMAIL_HOST_USER, ["python.ekbatan@gmail.com"])
+                            async_send_mail.delay(mail_subject, message)
                             return HttpResponse('Please confirm your email address to complete the registration')
                             messages.success(request, "Register Successfully!")
                             return redirect('/')
